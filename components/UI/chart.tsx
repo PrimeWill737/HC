@@ -54,10 +54,7 @@ function ChartContainer({
       <div
         data-slot="chart"
         data-chart={chartId}
-        className={cn(
-          "[&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border flex aspect-video justify-center text-xs [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-sector]:outline-hidden [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-surface]:outline-hidden",
-          className,
-        )}
+        className={cn("", className)}
         {...props}
       >
         <ChartStyle id={chartId} config={config} />
@@ -84,8 +81,8 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
         __html: Object.entries(THEMES)
           .map(
             ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
-${colorConfig
+ ${prefix} [data-chart=${id}] {
+ ${colorConfig
   .map(([key, itemConfig]) => {
     const color =
       itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
@@ -172,13 +169,11 @@ function ChartTooltipContent({
 
   return (
     <div
-      className={cn(
-        "border-border/50 bg-background grid min-w-[8rem] items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl",
-        className,
-      )}
+      data-slot="chart-tooltip-content"
+      className={cn("", className)}
     >
       {!nestLabel ? tooltipLabel : null}
-      <div className="grid gap-1.5">
+      <div>
         {payload.map((item, index) => {
           const key = `${nameKey || item.name || item.dataKey || "value"}`;
           const itemConfig = getPayloadConfigFromPayload(config, item, key);
@@ -188,8 +183,8 @@ function ChartTooltipContent({
             <div
               key={item.dataKey}
               className={cn(
-                "[&>svg]:text-muted-foreground flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5",
-                indicator === "dot" && "items-center",
+                "",
+                indicator === "dot" && "indicator-dot",
               )}
             >
               {formatter && item?.value !== undefined && item.name ? (
@@ -226,14 +221,14 @@ function ChartTooltipContent({
                       nestLabel ? "items-end" : "items-center",
                     )}
                   >
-                    <div className="grid gap-1.5">
+                    <div>
                       {nestLabel ? tooltipLabel : null}
-                      <span className="text-muted-foreground">
+                      <span>
                         {itemConfig?.label || item.name}
                       </span>
                     </div>
                     {item.value && (
-                      <span className="text-foreground font-mono font-medium tabular-nums">
+                      <span>
                         {item.value.toLocaleString()}
                       </span>
                     )}
@@ -269,9 +264,10 @@ function ChartLegendContent({
 
   return (
     <div
+      data-slot="chart-legend-content"
       className={cn(
-        "flex items-center justify-center gap-4",
-        verticalAlign === "top" ? "pb-3" : "pt-3",
+        "",
+        verticalAlign,
         className,
       )}
     >
@@ -282,9 +278,6 @@ function ChartLegendContent({
         return (
           <div
             key={item.value}
-            className={cn(
-              "[&>svg]:text-muted-foreground flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3",
-            )}
           >
             {itemConfig?.icon && !hideIcon ? (
               <itemConfig.icon />

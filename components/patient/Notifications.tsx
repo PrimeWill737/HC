@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Bell, Check, CheckCheck, Trash2, Filter, Calendar, FileText, Pill, AlertCircle, Info, X } from 'lucide-react';
 import { Button } from '../UI/button';
-import { Card } from '../UI/card';
-import { Badge } from '../UI/badge';
+// import { Card } from '../UI/card';
+// import { Badge } from '../UI/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../UI/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../UI/tabs';
 import PatientLayout from '../shared/PatientLayout';

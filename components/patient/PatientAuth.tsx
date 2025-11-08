@@ -82,7 +82,7 @@ export default function PatientAuth({ onAuth, onBack }: PatientAuthProps) {
                   <Input
                     id="login-email"
                     type="email"
-                    placeholder="your.email@example.com"
+                    placeholder="cbrilliance@example.com"
                     value={loginEmail}
                     onChange={(e) => setLoginEmail(e.target.value)}
                     className="patient-auth-input"
@@ -127,7 +127,7 @@ export default function PatientAuth({ onAuth, onBack }: PatientAuthProps) {
                   <Input
                     id="signup-name"
                     type="text"
-                    placeholder="John Doe"
+                    placeholder="Cbrillaince"
                     value={signupName}
                     onChange={(e) => setSignupName(e.target.value)}
                     className="patient-auth-input"
@@ -139,7 +139,7 @@ export default function PatientAuth({ onAuth, onBack }: PatientAuthProps) {
                   <Input
                     id="signup-email"
                     type="email"
-                    placeholder="your.email@example.com"
+                    placeholder="Cbrillaince@example.com"
                     value={signupEmail}
                     onChange={(e) => setSignupEmail(e.target.value)}
                     className="patient-auth-input"

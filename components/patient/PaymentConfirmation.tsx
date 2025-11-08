@@ -1,29 +1,47 @@
-import { CheckCircle2, Calendar, Clock, MapPin, DollarSign, Download, ArrowLeft } from 'lucide-react';
-import { Button } from '../UI/button';
-import { Card } from '../UI/card';
-import { Separator } from '../UI/separator';
-import PatientLayout from '../shared/PatientLayout';
-import { BookingData } from '../../App';
-import { motion } from 'motion/react';
+import {
+  CheckCircle2,
+  Calendar,
+  Clock,
+  MapPin,
+  DollarSign,
+  Download,
+  ArrowLeft,
+} from "lucide-react";
+import { Button } from "../UI/button";
+import { Card } from "../UI/card";
+import { Separator } from "../UI/separator";
+import PatientLayout from "../shared/PatientLayout";
+import { BookingData } from "../../App";
+import { motion } from "motion/react";
 
 interface PaymentConfirmationProps {
   booking: BookingData | null;
   onNavigate: (screen: string) => void;
 }
 
-export default function PaymentConfirmation({ booking, onNavigate }: PaymentConfirmationProps) {
-  const userProfile = {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    phone: '+1 234 567 8900',
+export default function PaymentConfirmation({
+  booking,
+  onNavigate,
+}: PaymentConfirmationProps) {
+  let userProfile = {
+    name: "cbrilliance",
+    email: "cbrilliance@example.com",
+    phone: "+1 234 567 8900",
   };
 
   if (!booking) {
     return (
-      <PatientLayout onNavigate={onNavigate} activeScreen="book-appointment" userProfile={userProfile}>
+      <PatientLayout
+        onNavigate={onNavigate}
+        activeScreen="book-appointment"
+        userProfile={userProfile}
+      >
         <div className="text-center py-12">
           <p className="text-gray-600">No booking information available</p>
-          <Button onClick={() => onNavigate('book-appointment')} className="mt-4">
+          <Button
+            onClick={() => onNavigate("book-appointment")}
+            className="mt-4"
+          >
             Book an Appointment
           </Button>
         </div>
@@ -35,20 +53,26 @@ export default function PaymentConfirmation({ booking, onNavigate }: PaymentConf
   const platformFee = booking.amount * 0.05;
 
   return (
-    <PatientLayout onNavigate={onNavigate} activeScreen="book-appointment" userProfile={userProfile}>
+    <PatientLayout
+      onNavigate={onNavigate}
+      activeScreen="book-appointment"
+      userProfile={userProfile}
+    >
       <div className="max-w-2xl mx-auto">
         {/* Success Animation */}
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          transition={{ type: 'spring', duration: 0.5 }}
+          transition={{ type: "spring", duration: 0.5 }}
           className="text-center mb-8"
         >
           <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-4">
             <CheckCircle2 className="w-12 h-12 text-green-600" />
           </div>
           <h1 className="text-gray-900 mb-2">Booking Confirmed!</h1>
-          <p className="text-gray-600">Your appointment has been successfully booked</p>
+          <p className="text-gray-600">
+            Your appointment has been successfully booked
+          </p>
         </motion.div>
 
         {/* Booking Summary Card */}
@@ -111,7 +135,9 @@ export default function PaymentConfirmation({ booking, onNavigate }: PaymentConf
             <div className="space-y-3 bg-green-50 rounded-lg p-4">
               <div className="flex justify-between">
                 <span className="text-gray-600">Consultation Fee</span>
-                <span className="text-gray-900">${booking.amount.toFixed(2)}</span>
+                <span className="text-gray-900">
+                  ${booking.amount.toFixed(2)}
+                </span>
               </div>
 
               <Separator />
@@ -131,7 +157,9 @@ export default function PaymentConfirmation({ booking, onNavigate }: PaymentConf
 
               <div className="flex justify-between">
                 <span className="text-gray-900">Total Paid</span>
-                <span className="text-green-600">${booking.amount.toFixed(2)}</span>
+                <span className="text-green-600">
+                  ${booking.amount.toFixed(2)}
+                </span>
               </div>
             </div>
 
@@ -144,7 +172,7 @@ export default function PaymentConfirmation({ booking, onNavigate }: PaymentConf
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-3">
           <Button
-            onClick={() => onNavigate('patient-dashboard')}
+            onClick={() => onNavigate("patient-dashboard")}
             className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-5"
           >
             <ArrowLeft className="mr-2 w-4 h-4" />
@@ -166,19 +194,27 @@ export default function PaymentConfirmation({ booking, onNavigate }: PaymentConf
           <ul className="space-y-2 text-sm text-gray-700">
             <li className="flex items-start gap-2">
               <span className="text-blue-600">•</span>
-              <span>You'll receive a confirmation email at {userProfile.email}</span>
+              <span>
+                You'll receive a confirmation email at {userProfile.email}
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-600">•</span>
-              <span>A reminder will be sent 24 hours before your appointment</span>
+              <span>
+                A reminder will be sent 24 hours before your appointment
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-600">•</span>
-              <span>Please arrive 10 minutes early with your ID and insurance card</span>
+              <span>
+                Please arrive 10 minutes early with your ID and insurance card
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-blue-600">•</span>
-              <span>You can reschedule or cancel up to 24 hours in advance</span>
+              <span>
+                You can reschedule or cancel up to 24 hours in advance
+              </span>
             </li>
           </ul>
         </Card>

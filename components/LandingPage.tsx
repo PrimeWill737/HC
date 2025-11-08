@@ -119,42 +119,40 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="landing-page">
       {/* Header/Navigation */}
-      <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+      <header className="landing-header">
+        <div className="landing-header-container">
+          <div className="landing-header-content">
             {/* Logo */}
-            <div className="flex items-center gap-2">
-              <div className="bg-blue-600 p-2 rounded-lg">
+            <div className="landing-logo">
+              <div className="landing-logo-icon">
                 <Heart className="w-6 h-6 text-white" />
               </div>
-              <div>
-                <h2 className="text-gray-900">Healthcare Base</h2>
-                <p className="text-xs text-gray-500">CBRILLIANCE AI-Techs</p>
+              <div className="landing-logo-text">
+                <h2>Healthcare Base</h2>
+                <p>CBRILLIANCE AI-Techs</p>
               </div>
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-8">
-              <a href="#features" className="text-gray-600 hover:text-gray-900 transition-colors">Features</a>
-              <a href="#how-it-works" className="text-gray-600 hover:text-gray-900 transition-colors">How It Works</a>
-              <a href="#testimonials" className="text-gray-600 hover:text-gray-900 transition-colors">Testimonials</a>
-              <a href="#contact" className="text-gray-600 hover:text-gray-900 transition-colors">Contact</a>
+            <nav className="landing-nav">
+              <a href="#features">Features</a>
+              <a href="#how-it-works">How It Works</a>
+              <a href="#testimonials">Testimonials</a>
+              <a href="#contact">Contact</a>
             </nav>
 
             {/* Desktop Actions */}
-            <div className="hidden md:flex items-center gap-3">
+            <div className="landing-actions">
               <Button 
                 variant="outline" 
                 onClick={() => onNavigate('admin-login')}
-                className="rounded-lg"
               >
                 Admin Login
               </Button>
               <Button 
                 onClick={() => onNavigate('welcome')}
-                className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
               >
                 Get Started
               </Button>
@@ -163,7 +161,7 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-gray-600"
+              className="landing-mobile-menu-btn"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -172,26 +170,28 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 bg-white">
-            <nav className="px-4 py-4 space-y-3">
-              <a href="#features" className="block text-gray-600 hover:text-gray-900 py-2">Features</a>
-              <a href="#how-it-works" className="block text-gray-600 hover:text-gray-900 py-2">How It Works</a>
-              <a href="#testimonials" className="block text-gray-600 hover:text-gray-900 py-2">Testimonials</a>
-              <a href="#contact" className="block text-gray-600 hover:text-gray-900 py-2">Contact</a>
-              <div className="pt-3 space-y-2">
-                <Button 
-                  variant="outline" 
-                  onClick={() => onNavigate('admin-login')}
-                  className="w-full rounded-lg"
-                >
-                  Admin Login
-                </Button>
-                <Button 
-                  onClick={() => onNavigate('welcome')}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
-                >
-                  Get Started
-                </Button>
+          <div className="landing-mobile-menu">
+            <nav className="landing-mobile-nav">
+              <a href="#features">Features</a>
+              <a href="#how-it-works">How It Works</a>
+              <a href="#testimonials">Testimonials</a>
+              <a href="#contact">Contact</a>
+              <div className="landing-mobile-actions">
+                <div>
+                  <Button 
+                    variant="outline" 
+                    onClick={() => onNavigate('admin-login')}
+                  >
+                    Admin Login
+                  </Button>
+                </div>
+                <div>
+                  <Button 
+                    onClick={() => onNavigate('welcome')}
+                  >
+                    Get Started
+                  </Button>
+                </div>
               </div>
             </nav>
           </div>
@@ -199,25 +199,24 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       </header>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-green-50 py-20 lg:py-32">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <section className="landing-hero">
+        <div className="landing-hero-container">
+          <div className="landing-hero-content">
             <div>
-              <div className="inline-block bg-blue-100 text-blue-700 px-4 py-2 rounded-full mb-6">
-                <p className="text-sm">🏥 Trusted by 50,000+ Patients</p>
+              <div className="landing-hero-badge">
+                <p>🏥 Trusted by 50,000+ Patients</p>
               </div>
-              <h1 className="text-gray-900 mb-6">
+              <h1 className="landing-hero-title">
                 Your Health, Simplified & Secured
               </h1>
-              <p className="text-xl text-gray-600 mb-8">
+              <p className="landing-hero-description">
                 Book appointments with top healthcare professionals, access your medical records anytime, 
                 and take control of your health journey—all in one secure platform.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="landing-hero-actions">
                 <Button 
                   size="lg"
                   onClick={() => onNavigate('welcome')}
-                  className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
                 >
                   Get Started Free
                   <ArrowRight className="ml-2 w-5 h-5" />
@@ -226,48 +225,46 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
                   size="lg"
                   variant="outline"
                   onClick={() => onNavigate('admin-login')}
-                  className="rounded-lg"
                 >
                   Healthcare Provider Login
                 </Button>
               </div>
-              <div className="flex items-center gap-6 mt-8">
+              <div className="landing-hero-rating">
                 <div className="flex items-center gap-1">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
                   ))}
                 </div>
-                <p className="text-gray-600">4.9/5 from 2,500+ reviews</p>
+                <p>4.9/5 from 2,500+ reviews</p>
               </div>
             </div>
-            <div className="relative">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+            <div className="landing-hero-image">
+              <div className="landing-hero-image-container">
                 <ImageWithFallback
                   src="https://images.unsplash.com/photo-1758691461990-03b49d969495?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwZG9jdG9yJTIwcGF0aWVudCUyMGNvbnN1bHRhdGlvbnxlbnwxfHx8fDE3NjI0OTMzNzZ8MA&ixlib=rb-4.1.0&q=80&w=1080"
                   alt="Healthcare Professional"
-                  className="w-full h-auto"
                 />
               </div>
               {/* Floating Stats Cards */}
-              <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg">
-                <div className="flex items-center gap-3">
-                  <div className="bg-green-100 p-3 rounded-lg">
+              <div className="landing-hero-float-card landing-hero-float-card-bottom">
+                <div className="landing-hero-float-card-content">
+                  <div className="landing-hero-float-card-icon bg-green-100">
                     <TrendingUp className="w-6 h-6 text-green-600" />
                   </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Active Users</p>
-                    <p className="text-gray-900">50,000+</p>
+                  <div className="landing-hero-float-card-text">
+                    <p>Active Users</p>
+                    <p>50,000+</p>
                   </div>
                 </div>
               </div>
-              <div className="absolute -top-6 -right-6 bg-white p-4 rounded-xl shadow-lg hidden lg:block">
-                <div className="flex items-center gap-3">
-                  <div className="bg-blue-100 p-3 rounded-lg">
+              <div className="landing-hero-float-card landing-hero-float-card-top">
+                <div className="landing-hero-float-card-content">
+                  <div className="landing-hero-float-card-icon bg-blue-100">
                     <Activity className="w-6 h-6 text-blue-600" />
                   </div>
-                  <div>
-                    <p className="text-sm text-gray-600">Satisfaction</p>
-                    <p className="text-gray-900">98%</p>
+                  <div className="landing-hero-float-card-text">
+                    <p>Satisfaction</p>
+                    <p>98%</p>
                   </div>
                 </div>
               </div>
@@ -277,13 +274,13 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* Stats Section */}
-      <section className="py-12 bg-blue-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <section className="landing-stats">
+        <div className="landing-stats-container">
+          <div className="landing-stats-grid">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <p className="text-white mb-2">{stat.value}</p>
-                <p className="text-blue-100">{stat.label}</p>
+              <div key={index} className="landing-stat-item">
+                <p className="landing-stat-value">{stat.value}</p>
+                <p className="landing-stat-label">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -291,27 +288,27 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-gray-900 mb-4">
+      <section id="features" className="landing-features">
+        <div className="landing-features-container">
+          <div className="landing-section-header">
+            <h2 className="landing-section-title">
               Everything You Need for Better Healthcare
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="landing-section-description">
               Powerful features designed to make healthcare management simple, secure, and accessible for everyone.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="landing-features-grid">
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
-                  <div className={`w-12 h-12 rounded-lg ${feature.color} flex items-center justify-center mb-4`}>
+                <Card key={index} className="landing-feature-card">
+                  <div className={`landing-feature-icon ${feature.color}`}>
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-gray-900 mb-3">{feature.title}</h3>
-                  <p className="text-gray-600">{feature.description}</p>
+                  <h3 className="landing-feature-title">{feature.title}</h3>
+                  <p className="landing-feature-description">{feature.description}</p>
                 </Card>
               );
             })}
@@ -320,25 +317,25 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-gray-900 mb-4">
+      <section id="how-it-works" className="landing-how-it-works">
+        <div className="landing-how-it-works-container">
+          <div className="landing-section-header">
+            <h2 className="landing-section-title">
               How It Works
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="landing-section-description">
               Get started with Healthcare Base in four simple steps
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="landing-steps-grid">
             {howItWorks.map((item, index) => (
-              <div key={index} className="text-center">
-                <div className="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">{item.step}</span>
+              <div key={index} className="landing-step-item">
+                <div className="landing-step-number">
+                  <span>{item.step}</span>
                 </div>
-                <h3 className="text-gray-900 mb-3">{item.title}</h3>
-                <p className="text-gray-600">{item.description}</p>
+                <h3 className="landing-step-title">{item.title}</h3>
+                <p className="landing-step-description">{item.description}</p>
               </div>
             ))}
           </div>
@@ -346,29 +343,29 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="py-20 bg-gradient-to-br from-green-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-gray-900 mb-4">
+      <section id="testimonials" className="landing-testimonials">
+        <div className="landing-testimonials-container">
+          <div className="landing-section-header">
+            <h2 className="landing-section-title">
               Trusted by Thousands
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="landing-section-description">
               See what our patients and healthcare providers are saying
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="landing-testimonials-grid">
             {testimonials.map((testimonial, index) => (
-              <Card key={index} className="p-6">
-                <div className="flex items-center gap-1 mb-4">
+              <Card key={index} className="landing-testimonial-card">
+                <div className="landing-testimonial-rating">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
                   ))}
                 </div>
-                <p className="text-gray-600 mb-6">&quot;{testimonial.content}&quot;</p>
+                <p className="landing-testimonial-content">&quot;{testimonial.content}&quot;</p>
                 <div>
-                  <p className="text-gray-900">{testimonial.name}</p>
-                  <p className="text-sm text-gray-500">{testimonial.role}</p>
+                  <p className="landing-testimonial-author">{testimonial.name}</p>
+                  <p className="landing-testimonial-role">{testimonial.role}</p>
                 </div>
               </Card>
             ))}
@@ -377,20 +374,19 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-blue-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-white mb-6">
+      <section className="landing-cta">
+        <div className="landing-cta-container">
+          <h2 className="landing-cta-title">
             Ready to Take Control of Your Health?
           </h2>
-          <p className="text-xl text-blue-100 mb-8">
+          <p className="landing-cta-description">
             Join thousands of patients who trust Healthcare Base for their healthcare needs. 
             Get started today—it's free!
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="landing-cta-actions">
             <Button 
               size="lg"
               onClick={() => onNavigate('welcome')}
-              className="bg-white text-blue-600 hover:bg-gray-100 rounded-lg"
             >
               Create Free Account
               <ArrowRight className="ml-2 w-5 h-5" />
@@ -399,7 +395,6 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
               size="lg"
               variant="outline"
               onClick={() => onNavigate('admin-login')}
-              className="border-white text-white hover:bg-blue-700 rounded-lg"
             >
               Provider Portal
             </Button>
@@ -408,51 +403,49 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* For Healthcare Providers */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="relative rounded-2xl overflow-hidden shadow-xl">
+      <section className="landing-providers">
+        <div className="landing-providers-container">
+          <div className="landing-providers-content">
+            <div className="landing-providers-image">
               <ImageWithFallback
                 src="https://images.unsplash.com/photo-1758691463610-3c2ecf5fb3fa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoZWFsdGhjYXJlJTIwdGVjaG5vbG9neSUyMG1vZGVybnxlbnwxfHx8fDE3NjI0OTIzMDl8MA&ixlib=rb-4.1.0&q=80&w=1080"
                 alt="Healthcare Technology"
-                className="w-full h-auto"
               />
             </div>
             <div>
-              <h2 className="text-gray-900 mb-6">
+              <h2 className="landing-providers-title">
                 For Healthcare Providers
               </h2>
-              <p className="text-xl text-gray-600 mb-8">
+              <p className="landing-providers-description">
                 Streamline your practice with our comprehensive admin dashboard. Manage appointments, 
                 track revenue, and provide better care with powerful analytics.
               </p>
-              <div className="space-y-4 mb-8">
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+              <div className="landing-providers-features">
+                <div className="landing-provider-feature">
+                  <CheckCircle className="landing-provider-feature-icon" />
                   <div>
-                    <h3 className="text-gray-900 mb-1">Appointment Management</h3>
-                    <p className="text-gray-600">Efficiently manage bookings, cancellations, and rescheduling</p>
+                    <h3 className="landing-provider-feature-title">Appointment Management</h3>
+                    <p className="landing-provider-feature-description">Efficiently manage bookings, cancellations, and rescheduling</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                <div className="landing-provider-feature">
+                  <CheckCircle className="landing-provider-feature-icon" />
                   <div>
-                    <h3 className="text-gray-900 mb-1">Revenue Analytics</h3>
-                    <p className="text-gray-600">Track earnings with detailed remittance reports and charts</p>
+                    <h3 className="landing-provider-feature-title">Revenue Analytics</h3>
+                    <p className="landing-provider-feature-description">Track earnings with detailed remittance reports and charts</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                <div className="landing-provider-feature">
+                  <CheckCircle className="landing-provider-feature-icon" />
                   <div>
-                    <h3 className="text-gray-900 mb-1">Export Reports</h3>
-                    <p className="text-gray-600">Generate and export detailed reports in PDF or Excel format</p>
+                    <h3 className="landing-provider-feature-title">Export Reports</h3>
+                    <p className="landing-provider-feature-description">Generate and export detailed reports in PDF or Excel format</p>
                   </div>
                 </div>
               </div>
               <Button 
                 size="lg"
                 onClick={() => onNavigate('admin-login')}
-                className="bg-green-600 hover:bg-green-700 text-white rounded-lg"
               >
                 Access Provider Portal
                 <ArrowRight className="ml-2 w-5 h-5" />
@@ -463,68 +456,68 @@ export default function LandingPage({ onNavigate }: LandingPageProps) {
       </section>
 
       {/* Footer */}
-      <footer id="contact" className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
+      <footer id="contact" className="landing-footer">
+        <div className="landing-footer-container">
+          <div className="landing-footer-grid">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="bg-blue-600 p-2 rounded-lg">
+              <div className="landing-footer-logo">
+                <div className="landing-footer-logo-icon">
                   <Heart className="w-5 h-5 text-white" />
                 </div>
-                <div>
-                  <h3 className="text-white">Healthcare Base</h3>
-                  <p className="text-xs text-gray-400">CBRILLIANCE AI-Techs LTD</p>
+                <div className="landing-footer-logo-text">
+                  <h3>Healthcare Base</h3>
+                  <p>CBRILLIANCE AI-Techs LTD</p>
                 </div>
               </div>
-              <p className="text-gray-400 text-sm">
+              <p className="landing-footer-description">
                 Empowering patients and healthcare providers with modern, secure, and accessible healthcare management.
               </p>
             </div>
 
             <div>
-              <h4 className="text-white mb-4">Product</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#features" className="hover:text-white transition-colors">Features</a></li>
-                <li><a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Security</a></li>
+              <h4 className="landing-footer-column-title">Product</h4>
+              <ul className="landing-footer-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Security</a></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="text-white mb-4">Company</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#contact" className="hover:text-white transition-colors">Contact</a></li>
+              <h4 className="landing-footer-column-title">Company</h4>
+              <ul className="landing-footer-links">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#contact">Contact</a></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="text-white mb-4">Legal</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">HIPAA Compliance</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Cookie Policy</a></li>
+              <h4 className="landing-footer-column-title">Legal</h4>
+              <ul className="landing-footer-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">HIPAA Compliance</a></li>
+                <li><a href="#">Cookie Policy</a></li>
               </ul>
             </div>
           </div>
 
-          <div className="border-t border-gray-800 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className="text-sm text-gray-400">
+          <div className="landing-footer-bottom">
+            <div className="landing-footer-bottom-content">
+              <p className="landing-footer-copyright">
                 © 2025 CBRILLIANCE AI-Techs LTD. All rights reserved.
               </p>
-              <div className="flex items-center gap-6">
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <div className="landing-footer-social">
+                <a href="#">
                   <Lock className="w-5 h-5" />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <a href="#">
                   <Shield className="w-5 h-5" />
                 </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <a href="#">
                   <Users className="w-5 h-5" />
                 </a>
               </div>

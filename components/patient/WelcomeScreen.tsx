@@ -1,6 +1,13 @@
-import { Activity, ArrowRight, Shield, Clock, Users, ChevronLeft } from 'lucide-react';
-import { Button } from '../UI/button';
-import { motion } from 'motion/react';
+import {
+  Activity,
+  ArrowRight,
+  Shield,
+  Clock,
+  Users,
+  ChevronLeft,
+} from "lucide-react";
+import { Button } from "../UI/button";
+import { motion } from "motion/react";
 
 interface WelcomeScreenProps {
   onNavigate: (screen: string) => void;
@@ -13,10 +20,10 @@ export default function WelcomeScreen({ onNavigate }: WelcomeScreenProps) {
       <div className="welcome-header page-container">
         <Button
           variant="ghost"
-          onClick={() => onNavigate('landing')}
+          onClick={() => onNavigate("landing")}
           className="btn-ghost text-gray-600"
         >
-          <ChevronLeft className="icon-md" style={{ marginRight: '0.25rem' }} />
+          <ChevronLeft className="icon-md margin-right-xs" />
           Back to Home
         </Button>
       </div>
@@ -36,7 +43,9 @@ export default function WelcomeScreen({ onNavigate }: WelcomeScreenProps) {
             </div>
             <div className="welcome-logo-text">
               <h1 className="welcome-logo-title">Healthcare Base</h1>
-              <p className="welcome-logo-subtitle">by CBRILLIANCE AI-Techs LTD</p>
+              <p className="welcome-logo-subtitle">
+                by CBRILLIANCE AI-Techs LTD
+              </p>
             </div>
           </div>
 
@@ -58,20 +67,18 @@ export default function WelcomeScreen({ onNavigate }: WelcomeScreenProps) {
             className="welcome-buttons"
           >
             <Button
-              onClick={() => onNavigate('patient-auth')}
+              onClick={() => onNavigate("patient-auth")}
               className="btn-primary rounded-xl shadow-lg btn-group"
               size="lg"
-              style={{ padding: '1.5rem 2rem' }}
             >
               Patient Portal
-              <ArrowRight className="icon-md" style={{ transition: 'transform 0.2s' }} />
+              <ArrowRight className="icon-md" />
             </Button>
             <Button
-              onClick={() => onNavigate('admin-login')}
+              onClick={() => onNavigate("admin-login")}
               variant="outline"
               className="btn-outline green rounded-xl"
               size="lg"
-              style={{ padding: '1.5rem 2rem' }}
             >
               Admin Access
             </Button>

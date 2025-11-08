@@ -1,16 +1,24 @@
-import { useState } from 'react';
-import { Search, Calendar as CalendarIcon, Clock, MapPin, Star, DollarSign, ArrowRight } from 'lucide-react';
-import { Button } from '../UI/button';
-import { Input } from '../UI/input';
-import { Card } from '../UI/card';
-import { Badge } from '../UI/badge';
-import { Calendar } from '../UI/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '../UI/popover';
-import { RadioGroup, RadioGroupItem } from '../UI/radio-group';
-import { Label } from '../UI/label';
-import PatientLayout from '../shared/PatientLayout';
-import { BookingData } from '../../App';
-import { toast } from 'sonner';
+import { useState } from "react";
+import {
+  Search,
+  Calendar as CalendarIcon,
+  Clock,
+  MapPin,
+  Star,
+  DollarSign,
+  ArrowRight,
+} from "lucide-react";
+import { Button } from "../UI/button";
+import { Input } from "../UI/input";
+import { Card } from "../UI/card";
+import { Badge } from "../UI/badge";
+import { Calendar } from "../UI/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "../UI/popover";
+import { RadioGroup, RadioGroupItem } from "../UI/radio-group";
+import { Label } from "../UI/label";
+import PatientLayout from "../shared/PatientLayout";
+import { BookingData } from "../../App";
+import { toast } from "sonner";
 
 interface BookAppointmentProps {
   onNavigate: (screen: string) => void;
@@ -19,71 +27,85 @@ interface BookAppointmentProps {
 
 const doctors = [
   {
-    id: '1',
-    name: 'Dr. Sarah Johnson',
-    specialty: 'Cardiologist',
-    clinic: 'City Heart Clinic',
+    id: "1",
+    name: "Dr. Sarah Johnson",
+    specialty: "Cardiologist",
+    clinic: "City Heart Clinic",
     rating: 4.9,
     reviews: 234,
-    experience: '15 years',
+    experience: "15 years",
     fee: 150,
     available: true,
-    image: '👩‍⚕️',
+    image: "👩‍⚕️",
   },
   {
-    id: '2',
-    name: 'Dr. Michael Chen',
-    specialty: 'General Physician',
-    clinic: 'Central Medical Center',
+    id: "2",
+    name: "Dr. Michael Chen",
+    specialty: "General Physician",
+    clinic: "Central Medical Center",
     rating: 4.8,
     reviews: 189,
-    experience: '12 years',
+    experience: "12 years",
     fee: 100,
     available: true,
-    image: '👨‍⚕️',
+    image: "👨‍⚕️",
   },
   {
-    id: '3',
-    name: 'Dr. Emily Rodriguez',
-    specialty: 'Dermatologist',
-    clinic: 'Skin Care Excellence',
+    id: "3",
+    name: "Dr. Emily Rodriguez",
+    specialty: "Dermatologist",
+    clinic: "Skin Care Excellence",
     rating: 4.9,
     reviews: 312,
-    experience: '10 years',
+    experience: "10 years",
     fee: 120,
     available: true,
-    image: '👩‍⚕️',
+    image: "👩‍⚕️",
   },
   {
-    id: '4',
-    name: 'Dr. James Wilson',
-    specialty: 'Orthopedic',
-    clinic: 'Joint & Bone Center',
+    id: "4",
+    name: "Dr. James Wilson",
+    specialty: "Orthopedic",
+    clinic: "Joint & Bone Center",
     rating: 4.7,
     reviews: 156,
-    experience: '18 years',
+    experience: "18 years",
     fee: 180,
     available: false,
-    image: '👨‍⚕️',
+    image: "👨‍⚕️",
   },
 ];
 
 const timeSlots = [
-  '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM',
-  '11:00 AM', '11:30 AM', '02:00 PM', '02:30 PM',
-  '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM',
+  "09:00 AM",
+  "09:30 AM",
+  "10:00 AM",
+  "10:30 AM",
+  "11:00 AM",
+  "11:30 AM",
+  "02:00 PM",
+  "02:30 PM",
+  "03:00 PM",
+  "03:30 PM",
+  "04:00 PM",
+  "04:30 PM",
 ];
 
-export default function BookAppointment({ onNavigate, onBookingComplete }: BookAppointmentProps) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedDoctor, setSelectedDoctor] = useState<typeof doctors[0] | null>(null);
+export default function BookAppointment({
+  onNavigate,
+  onBookingComplete,
+}: BookAppointmentProps) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedDoctor, setSelectedDoctor] = useState<
+    (typeof doctors)[0] | null
+  >(null);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
-  const [selectedTime, setSelectedTime] = useState('');
+  const [selectedTime, setSelectedTime] = useState("");
 
   const userProfile = {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    phone: '+1 234 567 8900',
+    name: "Cbrillaince",
+    email: "cbrillaince@example.com",
+    phone: "+1 234 567 8900",
   };
 
   const filteredDoctors = doctors.filter(
@@ -95,7 +117,7 @@ export default function BookAppointment({ onNavigate, onBookingComplete }: BookA
 
   const handleBookAppointment = () => {
     if (!selectedDoctor || !selectedDate || !selectedTime) {
-      toast.error('Please select a doctor, date, and time');
+      toast.error("Please select a doctor, date, and time");
       return;
     }
 
@@ -104,10 +126,10 @@ export default function BookAppointment({ onNavigate, onBookingComplete }: BookA
       doctorName: selectedDoctor.name,
       specialty: selectedDoctor.specialty,
       clinic: selectedDoctor.clinic,
-      date: selectedDate.toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'short', 
-        day: 'numeric' 
+      date: selectedDate.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
       }),
       time: selectedTime,
       amount: selectedDoctor.fee,
@@ -117,12 +139,18 @@ export default function BookAppointment({ onNavigate, onBookingComplete }: BookA
   };
 
   return (
-    <PatientLayout onNavigate={onNavigate} activeScreen="book-appointment" userProfile={userProfile}>
+    <PatientLayout
+      onNavigate={onNavigate}
+      activeScreen="book-appointment"
+      userProfile={userProfile}
+    >
       <div className="book-appointment-container">
         {/* Header */}
         <div>
           <h1 className="appointment-title">Book an Appointment</h1>
-          <p className="appointment-subtitle">Find and schedule with top healthcare professionals</p>
+          <p className="appointment-subtitle">
+            Find and schedule with top healthcare professionals
+          </p>
         </div>
 
         {/* Search */}
@@ -148,10 +176,8 @@ export default function BookAppointment({ onNavigate, onBookingComplete }: BookA
               <Card
                 key={doctor.id}
                 className={`doctor-card ${
-                  selectedDoctor?.id === doctor.id
-                    ? 'doctor-card-selected'
-                    : ''
-                } ${!doctor.available ? 'doctor-card-unavailable' : ''}`}
+                  selectedDoctor?.id === doctor.id ? "doctor-card-selected" : ""
+                } ${!doctor.available ? "doctor-card-unavailable" : ""}`}
                 onClick={() => doctor.available && setSelectedDoctor(doctor)}
               >
                 <div className="doctor-card-content">
@@ -174,7 +200,9 @@ export default function BookAppointment({ onNavigate, onBookingComplete }: BookA
                         <span className="rating-count">({doctor.reviews})</span>
                       </div>
 
-                      <div className="doctor-experience">{doctor.experience}</div>
+                      <div className="doctor-experience">
+                        {doctor.experience}
+                      </div>
 
                       <div className="doctor-clinic">
                         <MapPin className="clinic-icon" />
@@ -205,8 +233,12 @@ export default function BookAppointment({ onNavigate, onBookingComplete }: BookA
                   {/* Selected Doctor */}
                   <div className="selected-doctor-info">
                     <p className="selected-doctor-label">Selected Doctor</p>
-                    <p className="selected-doctor-name">{selectedDoctor.name}</p>
-                    <p className="selected-doctor-specialty">{selectedDoctor.specialty}</p>
+                    <p className="selected-doctor-name">
+                      {selectedDoctor.name}
+                    </p>
+                    <p className="selected-doctor-specialty">
+                      {selectedDoctor.specialty}
+                    </p>
                   </div>
 
                   {/* Date Picker */}
@@ -220,13 +252,15 @@ export default function BookAppointment({ onNavigate, onBookingComplete }: BookA
                         >
                           <CalendarIcon className="calendar-icon" />
                           {selectedDate ? (
-                            selectedDate.toLocaleDateString('en-US', {
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric',
+                            selectedDate.toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
                             })
                           ) : (
-                            <span className="date-placeholder">Pick a date</span>
+                            <span className="date-placeholder">
+                              Pick a date
+                            </span>
                           )}
                         </Button>
                       </PopoverTrigger>
@@ -245,7 +279,10 @@ export default function BookAppointment({ onNavigate, onBookingComplete }: BookA
                   {selectedDate && (
                     <div className="time-slots-section">
                       <Label className="time-slots-label">Select Time</Label>
-                      <RadioGroup value={selectedTime} onValueChange={setSelectedTime}>
+                      <RadioGroup
+                        value={selectedTime}
+                        onValueChange={setSelectedTime}
+                      >
                         <div className="time-slots-grid">
                           {timeSlots.map((time) => (
                             <div key={time}>
@@ -254,10 +291,7 @@ export default function BookAppointment({ onNavigate, onBookingComplete }: BookA
                                 id={time}
                                 className="time-slot-option"
                               />
-                              <Label
-                                htmlFor={time}
-                                className="time-slot-label"
-                              >
+                              <Label htmlFor={time} className="time-slot-label">
                                 <Clock className="time-icon" />
                                 {time}
                               </Label>
@@ -273,8 +307,12 @@ export default function BookAppointment({ onNavigate, onBookingComplete }: BookA
                     <div className="payment-info">
                       <div className="payment-details">
                         <div className="payment-row">
-                          <span className="payment-label">Consultation Fee</span>
-                          <span className="payment-amount">${selectedDoctor.fee}</span>
+                          <span className="payment-label">
+                            Consultation Fee
+                          </span>
+                          <span className="payment-amount">
+                            ${selectedDoctor.fee}
+                          </span>
                         </div>
                         <div className="payment-sub-row">
                           <span>To Clinic (95%)</span>
@@ -299,7 +337,9 @@ export default function BookAppointment({ onNavigate, onBookingComplete }: BookA
               ) : (
                 <div className="booking-empty-state">
                   <CalendarIcon className="booking-empty-icon" />
-                  <p className="booking-empty-text">Select a doctor to continue</p>
+                  <p className="booking-empty-text">
+                    Select a doctor to continue
+                  </p>
                 </div>
               )}
             </Card>
