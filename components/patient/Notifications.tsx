@@ -139,140 +139,152 @@ export default function Notifications({ onNavigate, userProfile }: Notifications
   const getNotificationIcon = (type: string) => {
     switch (type) {
       case 'appointment':
-        return { icon: Calendar, color: 'bg-blue-100 text-blue-600' };
+        return { icon: Calendar, color: 'notification-type-appointment' };
       case 'lab-result':
-        return { icon: FileText, color: 'bg-purple-100 text-purple-600' };
+        return { icon: FileText, color: 'notification-type-lab-result' };
       case 'prescription':
-        return { icon: Pill, color: 'bg-green-100 text-green-600' };
+        return { icon: Pill, color: 'notification-type-prescription' };
       case 'reminder':
-        return { icon: AlertCircle, color: 'bg-orange-100 text-orange-600' };
+        return { icon: AlertCircle, color: 'notification-type-reminder' };
       case 'system':
-        return { icon: Info, color: 'bg-gray-100 text-gray-600' };
+        return { icon: Info, color: 'notification-type-system' };
       default:
-        return { icon: Bell, color: 'bg-gray-100 text-gray-600' };
+        return { icon: Bell, color: 'notification-type-system' };
     }
   };
 
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
       case 'high':
-        return 'bg-red-100 text-red-700';
+        return 'notification-priority high';
       case 'medium':
-        return 'bg-yellow-100 text-yellow-700';
+        return 'notification-priority medium';
       case 'low':
-        return 'bg-gray-100 text-gray-700';
+        return 'notification-priority low';
       default:
-        return 'bg-gray-100 text-gray-700';
+        return 'notification-priority low';
     }
   };
 
   return (
     <PatientLayout onNavigate={onNavigate} activeScreen="notifications" userProfile={userProfile}>
-      <div className="space-y-6">
+      <div className="notifications-container">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="notifications-header">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <h1 className="text-gray-900">Notifications</h1>
+              <h1 className="notifications-title">Notifications</h1>
               {unreadCount > 0 && (
-                <Badge className="bg-red-100 text-red-700">
+                <div className="notifications-badge unread">
                   {unreadCount} Unread
-                </Badge>
+                </div>
               )}
             </div>
-            <p className="text-gray-600">Stay updated with your health appointments and results</p>
+            <p className="notifications-subtitle">Stay updated with your health appointments and results</p>
           </div>
-          <div className="flex gap-2">
+          <div className="notifications-actions">
             {unreadCount > 0 && (
-              <Button
-                variant="outline"
+              <button
+                className="notifications-button outline"
                 onClick={handleMarkAllAsRead}
-                className="rounded-lg"
               >
                 <CheckCheck className="mr-2 w-4 h-4" />
                 Mark All as Read
-              </Button>
+              </button>
             )}
             {notifications.length > 0 && (
-              <Button
-                variant="outline"
+              <button
+                className="notifications-button danger"
                 onClick={handleClearAll}
-                className="border-red-200 text-red-600 hover:bg-red-50 rounded-lg"
               >
                 <Trash2 className="mr-2 w-4 h-4" />
                 Clear All
-              </Button>
+              </button>
             )}
           </div>
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Card className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="bg-blue-100 p-2 rounded-lg">
-                <Bell className="w-5 h-5 text-blue-600" />
+        <div className="notifications-stats-grid">
+          <div className="notifications-stat-card">
+            <div className="notifications-stat-content">
+              <div className="notifications-stat-icon bg-blue-100">
+                <Bell className="icon-blue" />
               </div>
-              <div>
-                <p className="text-sm text-gray-600">Total</p>
-                <p className="text-gray-900">{notifications.length}</p>
-              </div>
-            </div>
-          </Card>
-          <Card className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="bg-red-100 p-2 rounded-lg">
-                <AlertCircle className="w-5 h-5 text-red-600" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Unread</p>
-                <p className="text-gray-900">{unreadCount}</p>
+              <div className="notifications-stat-info">
+                <p className="notifications-stat-label">Total</p>
+                <p className="notifications-stat-value">{notifications.length}</p>
               </div>
             </div>
-          </Card>
-          <Card className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="bg-purple-100 p-2 rounded-lg">
-                <FileText className="w-5 h-5 text-purple-600" />
+          </div>
+          <div className="notifications-stat-card">
+            <div className="notifications-stat-content">
+              <div className="notifications-stat-icon bg-red-100">
+                <AlertCircle className="icon-red" />
               </div>
-              <div>
-                <p className="text-sm text-gray-600">Lab Results</p>
-                <p className="text-gray-900">{notifications.filter(n => n.type === 'lab-result').length}</p>
-              </div>
-            </div>
-          </Card>
-          <Card className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="bg-green-100 p-2 rounded-lg">
-                <Calendar className="w-5 h-5 text-green-600" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-600">Appointments</p>
-                <p className="text-gray-900">{notifications.filter(n => n.type === 'appointment').length}</p>
+              <div className="notifications-stat-info">
+                <p className="notifications-stat-label">Unread</p>
+                <p className="notifications-stat-value">{unreadCount}</p>
               </div>
             </div>
-          </Card>
+          </div>
+          <div className="notifications-stat-card">
+            <div className="notifications-stat-content">
+              <div className="notifications-stat-icon bg-purple-100">
+                <FileText className="icon-purple" />
+              </div>
+              <div className="notifications-stat-info">
+                <p className="notifications-stat-label">Lab Results</p>
+                <p className="notifications-stat-value">{notifications.filter(n => n.type === 'lab-result').length}</p>
+              </div>
+            </div>
+          </div>
+          <div className="notifications-stat-card">
+            <div className="notifications-stat-content">
+              <div className="notifications-stat-icon bg-green-100">
+                <Calendar className="icon-green" />
+              </div>
+              <div className="notifications-stat-info">
+                <p className="notifications-stat-label">Appointments</p>
+                <p className="notifications-stat-value">{notifications.filter(n => n.type === 'appointment').length}</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Tabs and Filters */}
-        <Tabs defaultValue="all" className="w-full">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-            <TabsList className="grid grid-cols-3 w-full md:w-auto">
-              <TabsTrigger value="all" onClick={() => setFilterType('all')}>
+        <Tabs defaultValue="all" className="notifications-tabs-container">
+          <div className="notifications-tabs-header">
+            <TabsList className="notifications-tabs-list">
+              <TabsTrigger 
+                value="all" 
+                className="notifications-tab-trigger"
+                onClick={() => setFilterType('all')}
+              >
                 All
               </TabsTrigger>
-              <TabsTrigger value="unread" onClick={() => setFilterType('unread')}>
+              <TabsTrigger 
+                value="unread" 
+                className="notifications-tab-trigger"
+                onClick={() => setFilterType('unread')}
+              >
                 Unread ({unreadCount})
               </TabsTrigger>
-              <TabsTrigger value="read" onClick={() => setFilterType('read')}>
+              <TabsTrigger 
+                value="read" 
+                className="notifications-tab-trigger"
+                onClick={() => setFilterType('read')}
+              >
                 Read
               </TabsTrigger>
             </TabsList>
 
             <Select value={filterType} onValueChange={setFilterType}>
-              <SelectTrigger className="w-full md:w-48 rounded-lg">
-                <Filter className="w-4 h-4 mr-2" />
-                <SelectValue placeholder="Filter by type" />
+              <SelectTrigger className="notifications-filter-select">
+                <div className="notifications-filter-trigger">
+                  <Filter className="notifications-filter-icon" />
+                  <SelectValue placeholder="Filter by type" />
+                </div>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Types</SelectItem>
@@ -286,212 +298,193 @@ export default function Notifications({ onNavigate, userProfile }: Notifications
             </Select>
           </div>
 
-          <TabsContent value="all" className="space-y-3">
+          <TabsContent value="all" className="notifications-list">
             {filteredNotifications.length > 0 ? (
               filteredNotifications.map((notification) => {
                 const { icon: Icon, color } = getNotificationIcon(notification.type);
                 return (
-                  <Card 
+                  <div 
                     key={notification.id} 
-                    className={`p-4 transition-all ${
-                      notification.unread 
-                        ? 'border-l-4 border-l-blue-600 bg-blue-50/30' 
-                        : 'hover:shadow-md'
-                    }`}
+                    className={`notification-item ${notification.unread ? 'unread' : ''}`}
                   >
-                    <div className="flex items-start gap-4">
-                      {/* Icon */}
-                      <div className={`p-2 rounded-lg ${color.split(' ')[0]} flex-shrink-0`}>
-                        <Icon className={`w-5 h-5 ${color.split(' ')[1]}`} />
+                    <div className="notification-content">
+                      <div className={`notification-icon-container ${color}`}>
+                        <Icon className="notification-icon" />
                       </div>
-
-                      {/* Content */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-2 mb-1">
-                          <h3 className={`${notification.unread ? 'text-gray-900' : 'text-gray-700'}`}>
+                      <div className="notification-details">
+                        <div className="notification-header">
+                          <h3 className={`notification-title ${notification.unread ? 'unread' : ''}`}>
                             {notification.title}
                           </h3>
-                          <div className="flex items-center gap-2 flex-shrink-0">
-                            <Badge className={getPriorityBadge(notification.priority)}>
+                          <div className="notification-meta">
+                            <span className={getPriorityBadge(notification.priority)}>
                               {notification.priority}
-                            </Badge>
+                            </span>
                             {notification.unread && (
-                              <div className="w-2 h-2 bg-blue-600 rounded-full" />
+                              <div className="notification-unread-indicator" />
                             )}
                           </div>
                         </div>
-                        <p className="text-sm text-gray-600 mb-2">
+                        <p className="notification-message">
                           {notification.message}
                         </p>
-                        <div className="flex items-center justify-between">
-                          <p className="text-xs text-gray-500">{notification.time}</p>
-                          <div className="flex gap-2">
+                        <div className="notification-footer">
+                          <p className="notification-time">{notification.time}</p>
+                          <div className="notification-actions">
                             {notification.unread && (
-                              <Button
-                                size="sm"
-                                variant="ghost"
+                              <button
+                                className="notifications-button ghost small"
                                 onClick={() => handleMarkAsRead(notification.id)}
-                                className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
                               >
                                 <Check className="w-4 h-4 mr-1" />
                                 Mark as Read
-                              </Button>
+                              </button>
                             )}
-                            <Button
-                              size="sm"
-                              variant="ghost"
+                            <button
+                              className="notifications-button ghost danger small"
                               onClick={() => handleDelete(notification.id)}
-                              className="text-red-600 hover:text-red-700 hover:bg-red-50"
                             >
                               <X className="w-4 h-4" />
-                            </Button>
+                            </button>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </Card>
+                  </div>
                 );
               })
             ) : (
-              <Card className="p-12 text-center">
-                <div className="max-w-md mx-auto">
-                  <div className="bg-gray-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Bell className="w-10 h-10 text-gray-400" />
-                  </div>
-                  <h3 className="text-gray-900 mb-2">No Notifications</h3>
-                  <p className="text-gray-600">
-                    You're all caught up! Check back later for updates about your appointments and health records.
-                  </p>
+              <div className="notifications-empty-state">
+                <div className="notifications-empty-icon">
+                  <Bell className="w-10 h-10 text-gray-400" />
                 </div>
-              </Card>
+                <h3 className="notifications-empty-title">No Notifications</h3>
+                <p className="notifications-empty-description">
+                  You're all caught up! Check back later for updates about your appointments and health records.
+                </p>
+              </div>
             )}
           </TabsContent>
 
-          <TabsContent value="unread" className="space-y-3">
+          <TabsContent value="unread" className="notifications-list">
             {filteredNotifications.filter(n => n.unread).length > 0 ? (
               filteredNotifications.filter(n => n.unread).map((notification) => {
                 const { icon: Icon, color } = getNotificationIcon(notification.type);
                 return (
-                  <Card 
+                  <div 
                     key={notification.id} 
-                    className="p-4 border-l-4 border-l-blue-600 bg-blue-50/30"
+                    className="notification-item unread"
                   >
-                    <div className="flex items-start gap-4">
-                      <div className={`p-2 rounded-lg ${color.split(' ')[0]} flex-shrink-0`}>
-                        <Icon className={`w-5 h-5 ${color.split(' ')[1]}`} />
+                    <div className="notification-content">
+                      <div className={`notification-icon-container ${color}`}>
+                        <Icon className="notification-icon" />
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-2 mb-1">
-                          <h3 className="text-gray-900">{notification.title}</h3>
-                          <div className="flex items-center gap-2 flex-shrink-0">
-                            <Badge className={getPriorityBadge(notification.priority)}>
+                      <div className="notification-details">
+                        <div className="notification-header">
+                          <h3 className="notification-title unread">
+                            {notification.title}
+                          </h3>
+                          <div className="notification-meta">
+                            <span className={getPriorityBadge(notification.priority)}>
                               {notification.priority}
-                            </Badge>
-                            <div className="w-2 h-2 bg-blue-600 rounded-full" />
+                            </span>
+                            <div className="notification-unread-indicator" />
                           </div>
                         </div>
-                        <p className="text-sm text-gray-600 mb-2">{notification.message}</p>
-                        <div className="flex items-center justify-between">
-                          <p className="text-xs text-gray-500">{notification.time}</p>
-                          <div className="flex gap-2">
-                            <Button
-                              size="sm"
-                              variant="ghost"
+                        <p className="notification-message">{notification.message}</p>
+                        <div className="notification-footer">
+                          <p className="notification-time">{notification.time}</p>
+                          <div className="notification-actions">
+                            <button
+                              className="notifications-button ghost small"
                               onClick={() => handleMarkAsRead(notification.id)}
-                              className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
                             >
                               <Check className="w-4 h-4 mr-1" />
                               Mark as Read
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="ghost"
+                            </button>
+                            <button
+                              className="notifications-button ghost danger small"
                               onClick={() => handleDelete(notification.id)}
-                              className="text-red-600 hover:text-red-700 hover:bg-red-50"
                             >
                               <X className="w-4 h-4" />
-                            </Button>
+                            </button>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </Card>
+                  </div>
                 );
               })
             ) : (
-              <Card className="p-12 text-center">
-                <div className="max-w-md mx-auto">
-                  <div className="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <CheckCheck className="w-10 h-10 text-green-600" />
-                  </div>
-                  <h3 className="text-gray-900 mb-2">All Caught Up!</h3>
-                  <p className="text-gray-600">
-                    You have no unread notifications. Great job staying on top of your health!
-                  </p>
+              <div className="notifications-empty-state">
+                <div className="notifications-empty-icon success">
+                  <CheckCheck className="w-10 h-10 text-green-600" />
                 </div>
-              </Card>
+                <h3 className="notifications-empty-title">All Caught Up!</h3>
+                <p className="notifications-empty-description">
+                  You have no unread notifications. Great job staying on top of your health!
+                </p>
+              </div>
             )}
           </TabsContent>
 
-          <TabsContent value="read" className="space-y-3">
+          <TabsContent value="read" className="notifications-list">
             {filteredNotifications.filter(n => !n.unread).length > 0 ? (
               filteredNotifications.filter(n => !n.unread).map((notification) => {
                 const { icon: Icon, color } = getNotificationIcon(notification.type);
                 return (
-                  <Card key={notification.id} className="p-4 hover:shadow-md transition-shadow">
-                    <div className="flex items-start gap-4">
-                      <div className={`p-2 rounded-lg ${color.split(' ')[0]} flex-shrink-0`}>
-                        <Icon className={`w-5 h-5 ${color.split(' ')[1]}`} />
+                  <div key={notification.id} className="notification-item">
+                    <div className="notification-content">
+                      <div className={`notification-icon-container ${color}`}>
+                        <Icon className="notification-icon" />
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-2 mb-1">
-                          <h3 className="text-gray-700">{notification.title}</h3>
-                          <Badge className={getPriorityBadge(notification.priority)}>
+                      <div className="notification-details">
+                        <div className="notification-header">
+                          <h3 className="notification-title">
+                            {notification.title}
+                          </h3>
+                          <span className={getPriorityBadge(notification.priority)}>
                             {notification.priority}
-                          </Badge>
+                          </span>
                         </div>
-                        <p className="text-sm text-gray-600 mb-2">{notification.message}</p>
-                        <div className="flex items-center justify-between">
-                          <p className="text-xs text-gray-500">{notification.time}</p>
-                          <Button
-                            size="sm"
-                            variant="ghost"
+                        <p className="notification-message">{notification.message}</p>
+                        <div className="notification-footer">
+                          <p className="notification-time">{notification.time}</p>
+                          <button
+                            className="notifications-button ghost danger small"
                             onClick={() => handleDelete(notification.id)}
-                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
                           >
                             <X className="w-4 h-4" />
-                          </Button>
+                          </button>
                         </div>
                       </div>
                     </div>
-                  </Card>
+                  </div>
                 );
               })
             ) : (
-              <Card className="p-12 text-center">
-                <div className="max-w-md mx-auto">
-                  <div className="bg-gray-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Bell className="w-10 h-10 text-gray-400" />
-                  </div>
-                  <h3 className="text-gray-900 mb-2">No Read Notifications</h3>
-                  <p className="text-gray-600">
-                    You haven't read any notifications yet.
-                  </p>
+              <div className="notifications-empty-state">
+                <div className="notifications-empty-icon">
+                  <Bell className="w-10 h-10 text-gray-400" />
                 </div>
-              </Card>
+                <h3 className="notifications-empty-title">No Read Notifications</h3>
+                <p className="notifications-empty-description">
+                  You haven't read any notifications yet.
+                </p>
+              </div>
             )}
           </TabsContent>
         </Tabs>
 
         {/* Info Card */}
-        <Card className="p-6 bg-blue-50 border-blue-200">
-          <div className="flex items-start gap-3">
-            <div className="bg-blue-100 p-2 rounded-lg flex-shrink-0">
-              <Bell className="w-5 h-5 text-blue-600" />
+        <div className="notifications-info-card">
+          <div className="notifications-info-content">
+            <div className="notifications-info-icon">
+              <Bell className="notifications-info-icon-svg" />
             </div>
-            <div>
-              <h3 className="text-gray-900 mb-1">Notification Settings</h3>
-              <p className="text-sm text-gray-600 mb-3">
+            <div className="notifications-info-text">
+              <h3 className="notifications-info-title">Notification Settings</h3>
+              <p className="notifications-info-description">
                 Manage your notification preferences in your profile settings to control how and when you receive updates.
               </p>
               <Button 
@@ -504,7 +497,7 @@ export default function Notifications({ onNavigate, userProfile }: Notifications
               </Button>
             </div>
           </div>
-        </Card>
+        </div>
       </div>
     </PatientLayout>
   );

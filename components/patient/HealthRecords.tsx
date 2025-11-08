@@ -73,46 +73,52 @@ export default function HealthRecords({ onNavigate, userProfile }: HealthRecords
 
   const getStatusBadge = (status: string) => {
     const statusColors: Record<string, string> = {
-      'Completed': 'bg-green-100 text-green-700',
-      'Available': 'bg-blue-100 text-blue-700',
-      'Active': 'bg-green-100 text-green-700',
-      'Normal': 'bg-green-100 text-green-700',
-      'Slightly Elevated': 'bg-yellow-100 text-yellow-700',
+      'Completed': 'badge-completed',
+      'Available': 'badge-available',
+      'Active': 'badge-active',
+      'Normal': 'badge-normal',
+      'Slightly Elevated': 'badge-elevated',
     };
-    return statusColors[status] || 'bg-gray-100 text-gray-700';
+    return statusColors[status] || 'badge-secondary';
   };
 
   return (
     <PatientLayout onNavigate={onNavigate} activeScreen="records" userProfile={userProfile}>
-      <div className="space-y-6">
+      <div className="health-records-container">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="records-header">
           <div>
-            <h1 className="text-gray-900 mb-2">Health Records</h1>
-            <p className="text-gray-600">View and manage your medical history and documents</p>
+            <h1 className="records-title">Health Records</h1>
+            <p className="records-subtitle">View and manage your medical history and documents</p>
           </div>
           <Button 
             onClick={handleUpload}
-            className="bg-green-600 hover:bg-green-700 text-white rounded-lg"
+            className="upload-button"
           >
-            <Upload className="mr-2 w-4 h-4" />
+            <Upload className="upload-icon" />
             Upload Document
           </Button>
         </div>
 
         {/* Vital Signs Summary */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="vital-signs-grid">
           {vitalSigns.map((vital, index) => {
             const Icon = vital.icon;
             return (
-              <Card key={index} className="p-4">
-                <div className="flex items-start gap-3">
-                  <div className={`p-2 rounded-lg ${vital.color === 'text-green-600' ? 'bg-green-100' : vital.color === 'text-blue-600' ? 'bg-blue-100' : 'bg-gray-100'}`}>
-                    <Icon className={`w-5 h-5 ${vital.color}`} />
+              <Card key={index} className="vital-card">
+                <div className="vital-card-content">
+                  <div className={`vital-icon-container ${
+                    vital.color === 'text-green-600' ? 'vital-icon-green' : 
+                    vital.color === 'text-blue-600' ? 'vital-icon-blue' : 'vital-icon-gray'
+                  }`}>
+                    <Icon className={`vital-icon ${
+                      vital.color === 'text-green-600' ? 'vital-icon-green-color' : 
+                      vital.color === 'text-blue-600' ? 'vital-icon-blue-color' : 'vital-icon-gray-color'
+                    }`} />
                   </div>
-                  <div className="flex-1">
-                    <p className="text-sm text-gray-600">{vital.label}</p>
-                    <p className="text-gray-900 mt-1">{vital.value}</p>
+                  <div className="vital-info">
+                    <p className="vital-label">{vital.label}</p>
+                    <p className="vital-value">{vital.value}</p>
                   </div>
                 </div>
               </Card>
@@ -121,8 +127,8 @@ export default function HealthRecords({ onNavigate, userProfile }: HealthRecords
         </div>
 
         {/* Tabs for different record types */}
-        <Tabs defaultValue="all" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
+        <Tabs defaultValue="all" className="tabs-container">
+          <TabsList className="tabs-list">
             <TabsTrigger value="all">All Records</TabsTrigger>
             <TabsTrigger value="prescriptions">Prescriptions</TabsTrigger>
             <TabsTrigger value="lab">Lab Results</TabsTrigger>
@@ -130,23 +136,23 @@ export default function HealthRecords({ onNavigate, userProfile }: HealthRecords
           </TabsList>
 
           {/* All Records Tab */}
-          <TabsContent value="all" className="space-y-4 mt-6">
+          <TabsContent value="all" className="tabs-content">
             {/* Search and Filter */}
-            <Card className="p-4">
-              <div className="flex flex-col md:flex-row gap-4">
-                <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Card className="search-filter-card">
+              <div className="search-filter-container">
+                <div className="search-container-records">
+                  <Search className="search-icon-records" />
                   <Input
                     type="text"
                     placeholder="Search records..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 rounded-lg"
+                    className="search-input-records"
                   />
                 </div>
                 <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                  <SelectTrigger className="w-full md:w-48 rounded-lg">
-                    <Filter className="w-4 h-4 mr-2" />
+                  <SelectTrigger className="filter-select-records">
+                    <Filter className="filter-icon-records" />
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -161,42 +167,42 @@ export default function HealthRecords({ onNavigate, userProfile }: HealthRecords
             </Card>
 
             {/* Records List */}
-            <div className="space-y-3">
+            <div className="records-list">
               {filteredRecords.map((record) => (
-                <Card key={record.id} className="p-4 hover:shadow-md transition-shadow">
-                  <div className="flex items-start justify-between gap-4">
+                <Card key={record.id} className="record-card">
+                  <div className="record-card-content">
                     <div className="flex items-start gap-4 flex-1">
-                      <div className="bg-blue-100 p-3 rounded-lg">
-                        <FileText className="w-6 h-6 text-blue-600" />
+                      <div className="record-icon-container">
+                        <FileText className="record-icon" />
                       </div>
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between mb-2">
+                      <div className="record-details">
+                        <div className="record-header">
                           <div>
-                            <h3 className="text-gray-900">{record.title}</h3>
-                            <p className="text-sm text-gray-600">{record.type}</p>
+                            <h3 className="record-title">{record.title}</h3>
+                            <p className="record-type">{record.type}</p>
                           </div>
                           <Badge className={getStatusBadge(record.status)}>
                             {record.status}
                           </Badge>
                         </div>
-                        <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
-                          <div className="flex items-center gap-1">
-                            <User className="w-4 h-4" />
+                        <div className="record-meta">
+                          <div className="record-meta-item">
+                            <User className="record-meta-icon" />
                             {record.doctor}
                           </div>
-                          <div className="flex items-center gap-1">
-                            <Calendar className="w-4 h-4" />
+                          <div className="record-meta-item">
+                            <Calendar className="record-meta-icon" />
                             {record.date}
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="record-actions">
                       <Button
                         size="sm"
                         variant="outline"
                         onClick={() => handleView(record.title)}
-                        className="rounded-lg"
+                        className="button-sm button-outline"
                       >
                         <Eye className="w-4 h-4 mr-2" />
                         View
@@ -205,7 +211,7 @@ export default function HealthRecords({ onNavigate, userProfile }: HealthRecords
                         size="sm"
                         variant="outline"
                         onClick={() => handleDownload(record.title)}
-                        className="rounded-lg"
+                        className="button-sm button-outline"
                       >
                         <Download className="w-4 h-4" />
                       </Button>
@@ -217,18 +223,18 @@ export default function HealthRecords({ onNavigate, userProfile }: HealthRecords
           </TabsContent>
 
           {/* Prescriptions Tab */}
-          <TabsContent value="prescriptions" className="space-y-4 mt-6">
-            <div className="grid gap-4">
+          <TabsContent value="prescriptions" className="tabs-content">
+            <div className="prescriptions-grid">
               {prescriptions.map((prescription) => (
-                <Card key={prescription.id} className="p-6">
-                  <div className="flex items-start justify-between mb-4">
+                <Card key={prescription.id} className="prescription-card">
+                  <div className="prescription-header">
                     <div className="flex items-start gap-4">
-                      <div className="bg-green-100 p-3 rounded-lg">
-                        <Pill className="w-6 h-6 text-green-600" />
+                      <div className="prescription-icon-container">
+                        <Pill className="prescription-icon" />
                       </div>
-                      <div>
-                        <h3 className="text-gray-900">{prescription.medication}</h3>
-                        <p className="text-sm text-gray-600 mt-1">{prescription.dosage}</p>
+                      <div className="prescription-info">
+                        <h3 className="prescription-name">{prescription.medication}</h3>
+                        <p className="prescription-dosage">{prescription.dosage}</p>
                       </div>
                     </div>
                     <Badge className={getStatusBadge(prescription.status)}>
@@ -236,30 +242,30 @@ export default function HealthRecords({ onNavigate, userProfile }: HealthRecords
                     </Badge>
                   </div>
                   
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-gray-50 rounded-lg p-4">
-                    <div>
-                      <p className="text-xs text-gray-500">Prescribed By</p>
-                      <p className="text-sm text-gray-900 mt-1">{prescription.prescribedBy}</p>
+                  <div className="prescription-details">
+                    <div className="prescription-detail-item">
+                      <p className="prescription-detail-label">Prescribed By</p>
+                      <p className="prescription-detail-value">{prescription.prescribedBy}</p>
                     </div>
-                    <div>
-                      <p className="text-xs text-gray-500">Start Date</p>
-                      <p className="text-sm text-gray-900 mt-1">{prescription.startDate}</p>
+                    <div className="prescription-detail-item">
+                      <p className="prescription-detail-label">Start Date</p>
+                      <p className="prescription-detail-value">{prescription.startDate}</p>
                     </div>
-                    <div>
-                      <p className="text-xs text-gray-500">Duration</p>
-                      <p className="text-sm text-gray-900 mt-1">{prescription.duration}</p>
+                    <div className="prescription-detail-item">
+                      <p className="prescription-detail-label">Duration</p>
+                      <p className="prescription-detail-value">{prescription.duration}</p>
                     </div>
-                    <div>
-                      <p className="text-xs text-gray-500">Refills Left</p>
-                      <p className="text-sm text-gray-900 mt-1">{prescription.refills}</p>
+                    <div className="prescription-detail-item">
+                      <p className="prescription-detail-label">Refills Left</p>
+                      <p className="prescription-detail-value">{prescription.refills}</p>
                     </div>
                   </div>
 
-                  <div className="flex gap-2 mt-4">
-                    <Button size="sm" variant="outline" className="rounded-lg">
+                  <div className="prescription-actions">
+                    <Button size="sm" variant="outline" className="button-sm button-outline">
                       Request Refill
                     </Button>
-                    <Button size="sm" variant="outline" onClick={() => handleDownload(prescription.medication)} className="rounded-lg">
+                    <Button size="sm" variant="outline" onClick={() => handleDownload(prescription.medication)} className="button-sm button-outline">
                       <Download className="w-4 h-4 mr-2" />
                       Download
                     </Button>
@@ -270,24 +276,24 @@ export default function HealthRecords({ onNavigate, userProfile }: HealthRecords
           </TabsContent>
 
           {/* Lab Results Tab */}
-          <TabsContent value="lab" className="space-y-4 mt-6">
-            <div className="grid gap-4">
+          <TabsContent value="lab" className="tabs-content">
+            <div className="lab-results-grid">
               {labResults.map((result) => (
-                <Card key={result.id} className="p-4 hover:shadow-md transition-shadow">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 flex-1">
-                      <div className="bg-purple-100 p-3 rounded-lg">
-                        <TestTube className="w-6 h-6 text-purple-600" />
+                <Card key={result.id} className="lab-result-card">
+                  <div className="lab-result-content">
+                    <div className="lab-result-main">
+                      <div className="lab-result-icon-container">
+                        <TestTube className="lab-result-icon" />
                       </div>
-                      <div className="flex-1">
-                        <h3 className="text-gray-900">{result.test}</h3>
-                        <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mt-1">
-                          <div className="flex items-center gap-1">
-                            <Calendar className="w-4 h-4" />
+                      <div className="lab-result-info">
+                        <h3 className="lab-result-name">{result.test}</h3>
+                        <div className="lab-result-meta">
+                          <div className="record-meta-item">
+                            <Calendar className="record-meta-icon" />
                             {result.date}
                           </div>
-                          <div className="flex items-center gap-1">
-                            <User className="w-4 h-4" />
+                          <div className="record-meta-item">
+                            <User className="record-meta-icon" />
                             {result.doctor}
                           </div>
                         </div>
@@ -296,12 +302,12 @@ export default function HealthRecords({ onNavigate, userProfile }: HealthRecords
                         {result.status}
                       </Badge>
                     </div>
-                    <div className="flex items-center gap-2 ml-4">
+                    <div className="lab-result-actions">
                       <Button
                         size="sm"
                         variant="outline"
                         onClick={() => handleView(result.test)}
-                        className="rounded-lg"
+                        className="button-sm button-outline"
                       >
                         <Eye className="w-4 h-4 mr-2" />
                         View
@@ -310,7 +316,7 @@ export default function HealthRecords({ onNavigate, userProfile }: HealthRecords
                         size="sm"
                         variant="outline"
                         onClick={() => handleDownload(result.test)}
-                        className="rounded-lg"
+                        className="button-sm button-outline"
                       >
                         <Download className="w-4 h-4" />
                       </Button>
@@ -322,24 +328,24 @@ export default function HealthRecords({ onNavigate, userProfile }: HealthRecords
           </TabsContent>
 
           {/* Documents Tab */}
-          <TabsContent value="documents" className="mt-6">
-            <Card className="p-12 text-center">
-              <div className="max-w-md mx-auto">
-                <div className="bg-gray-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Upload className="w-10 h-10 text-gray-400" />
+          <TabsContent value="documents" className="tabs-content">
+            <Card className="documents-upload-card">
+              <div className="documents-upload-content">
+                <div className="upload-placeholder">
+                  <Upload className="upload-placeholder-icon" />
                 </div>
-                <h3 className="text-gray-900 mb-2">Upload Your Documents</h3>
-                <p className="text-gray-600 mb-6">
+                <h3 className="upload-title">Upload Your Documents</h3>
+                <p className="upload-description">
                   Upload medical documents, insurance cards, or any health-related files
                 </p>
                 <Button 
                   onClick={handleUpload}
-                  className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
+                  className="upload-primary-button"
                 >
-                  <Upload className="mr-2 w-4 h-4" />
+                  <Upload className="upload-icon" />
                   Choose Files to Upload
                 </Button>
-                <p className="text-xs text-gray-500 mt-4">
+                <p className="upload-note">
                   Supported formats: PDF, JPG, PNG (Max 10MB)
                 </p>
               </div>
@@ -348,14 +354,14 @@ export default function HealthRecords({ onNavigate, userProfile }: HealthRecords
         </Tabs>
 
         {/* Info Card */}
-        <Card className="p-6 bg-blue-50 border-blue-200">
-          <div className="flex items-start gap-3">
-            <div className="bg-blue-100 p-2 rounded-lg flex-shrink-0">
-              <FileText className="w-5 h-5 text-blue-600" />
+        <Card className="records-info-card">
+          <div className="records-info-content">
+            <div className="records-info-icon">
+              <FileText className="records-info-icon-svg" />
             </div>
-            <div>
-              <h3 className="text-gray-900 mb-1">Secure Health Records</h3>
-              <p className="text-sm text-gray-600">
+            <div className="records-info-text">
+              <h3 className="records-info-title">Secure Health Records</h3>
+              <p className="records-info-description">
                 All your health records are encrypted and stored securely. You have full control over who can 
                 access your medical information. Download or share records with healthcare providers anytime.
               </p>

@@ -7,9 +7,9 @@ import { PanelLeftIcon } from "lucide-react";
 
 import { useIsMobile } from "./use-mobile";
 import { cn } from "./utils";
-import { Button } from "../UI/button";
-import { Input } from "../UI/input";
-import { Separator } from "../UI/separator";
+import { Button } from "./button";
+import { Input } from "./input";
+import { Separator } from "./separator";
 import {
   Sheet,
   SheetContent,
@@ -23,7 +23,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./tooltip";
+} from "@radix-ui/react-tooltip";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;

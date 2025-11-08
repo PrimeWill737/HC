@@ -63,134 +63,134 @@ export default function BookingManagement({ onNavigate }: BookingManagementProps
 
   return (
     <AdminLayout onNavigate={onNavigate} activeScreen="booking-management">
-      <div className="space-y-6">
-        {/* Header */}
-        <div>
-          <h1 className="text-gray-900 mb-2">Booking Management</h1>
-          <p className="text-gray-600">View and manage all patient appointments</p>
+  <div className="booking-management-space">
+    {/* Header */}
+    <div className="booking-header">
+      <h1 className="booking-title">Booking Management</h1>
+      <p className="booking-subtitle">View and manage all patient appointments</p>
+    </div>
+
+    {/* Filters */}
+    <Card className="filters-card">
+      <div className="filters-container">
+        {/* Search */}
+        <div className="search-container">
+          <Search className="search-icon" />
+          <Input
+            type="text"
+            placeholder="Search by patient, doctor, or booking ID..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
+          />
         </div>
 
-        {/* Filters */}
-        <Card className="p-4">
-          <div className="flex flex-col md:flex-row gap-4">
-            {/* Search */}
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <Input
-                type="text"
-                placeholder="Search by patient, doctor, or booking ID..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 rounded-lg"
-              />
-            </div>
-
-            {/* Status Filter */}
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-full md:w-48 rounded-lg">
-                <Filter className="w-4 h-4 mr-2" />
-                <SelectValue placeholder="Filter by status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="confirmed">Confirmed</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="cancelled">Cancelled</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </Card>
-
-        {/* Stats Summary */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Card className="p-4">
-            <p className="text-sm text-gray-600 mb-1">Total Bookings</p>
-            <p className="text-gray-900">{bookings.length}</p>
-          </Card>
-          <Card className="p-4">
-            <p className="text-sm text-gray-600 mb-1">Confirmed</p>
-            <p className="text-green-600">{bookings.filter(b => b.status === 'Confirmed').length}</p>
-          </Card>
-          <Card className="p-4">
-            <p className="text-sm text-gray-600 mb-1">Pending</p>
-            <p className="text-yellow-600">{bookings.filter(b => b.status === 'Pending').length}</p>
-          </Card>
-          <Card className="p-4">
-            <p className="text-sm text-gray-600 mb-1">Cancelled</p>
-            <p className="text-red-600">{bookings.filter(b => b.status === 'Cancelled').length}</p>
-          </Card>
-        </div>
-
-        {/* Bookings Table */}
-        <Card className="overflow-hidden">
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Booking ID</TableHead>
-                  <TableHead>Patient</TableHead>
-                  <TableHead>Doctor</TableHead>
-                  <TableHead>Specialty</TableHead>
-                  <TableHead>Date & Time</TableHead>
-                  <TableHead>Amount</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredBookings.map((booking) => (
-                  <TableRow key={booking.id}>
-                    <TableCell className="text-gray-900">{booking.id}</TableCell>
-                    <TableCell className="text-gray-900">{booking.patient}</TableCell>
-                    <TableCell className="text-gray-700">{booking.doctor}</TableCell>
-                    <TableCell className="text-gray-600">{booking.specialty}</TableCell>
-                    <TableCell>
-                      <div className="flex flex-col gap-1">
-                        <div className="flex items-center gap-1 text-sm text-gray-700">
-                          <Calendar className="w-3 h-3" />
-                          {booking.date}
-                        </div>
-                        <div className="flex items-center gap-1 text-sm text-gray-600">
-                          <Clock className="w-3 h-3" />
-                          {booking.time}
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-gray-900">${booking.amount}</TableCell>
-                    <TableCell>{getStatusBadge(booking.status)}</TableCell>
-                    <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon">
-                            <MoreVertical className="w-4 h-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem onClick={() => handleApprove(booking.id)}>
-                            <CheckCircle className="w-4 h-4 mr-2 text-green-600" />
-                            Approve
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleCancel(booking.id)}>
-                            <XCircle className="w-4 h-4 mr-2 text-red-600" />
-                            Cancel
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-
-          {filteredBookings.length === 0 && (
-            <div className="text-center py-12">
-              <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-500">No bookings found</p>
-            </div>
-          )}
-        </Card>
+        {/* Status Filter */}
+        <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <SelectTrigger className="filter-select">
+            <Filter className="filter-icon" />
+            <SelectValue placeholder="Filter by status" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Status</SelectItem>
+            <SelectItem value="confirmed">Confirmed</SelectItem>
+            <SelectItem value="pending">Pending</SelectItem>
+            <SelectItem value="cancelled">Cancelled</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
-    </AdminLayout>
+    </Card>
+
+    {/* Stats Summary */}
+    <div className="stats-summary-grid">
+      <Card className="stat-card-summary">
+        <p className="stat-label">Total Bookings</p>
+        <p className="stat-value">{bookings.length}</p>
+      </Card>
+      <Card className="stat-card-summary">
+        <p className="stat-label">Confirmed</p>
+        <p className="stat-value-confirmed">{bookings.filter(b => b.status === 'Confirmed').length}</p>
+      </Card>
+      <Card className="stat-card-summary">
+        <p className="stat-label">Pending</p>
+        <p className="stat-value-pending">{bookings.filter(b => b.status === 'Pending').length}</p>
+      </Card>
+      <Card className="stat-card-summary">
+        <p className="stat-label">Cancelled</p>
+        <p className="stat-value-cancelled">{bookings.filter(b => b.status === 'Cancelled').length}</p>
+      </Card>
+    </div>
+
+    {/* Bookings Table */}
+    <Card className="bookings-table-card">
+      <div className="table-container">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Booking ID</TableHead>
+              <TableHead>Patient</TableHead>
+              <TableHead>Doctor</TableHead>
+              <TableHead>Specialty</TableHead>
+              <TableHead>Date & Time</TableHead>
+              <TableHead>Amount</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredBookings.map((booking) => (
+              <TableRow key={booking.id}>
+                <TableCell className="booking-id">{booking.id}</TableCell>
+                <TableCell className="patient-name">{booking.patient}</TableCell>
+                <TableCell className="doctor-name">{booking.doctor}</TableCell>
+                <TableCell className="specialty">{booking.specialty}</TableCell>
+                <TableCell>
+                  <div className="datetime-container">
+                    <div className="date-row">
+                      <Calendar className="datetime-icon" />
+                      {booking.date}
+                    </div>
+                    <div className="time-row">
+                      <Clock className="datetime-icon" />
+                      {booking.time}
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell className="amount">${booking.amount}</TableCell>
+                <TableCell>{getStatusBadge(booking.status)}</TableCell>
+                <TableCell>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon" className="action-button">
+                        <MoreVertical className="action-icon" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem onClick={() => handleApprove(booking.id)}>
+                        <CheckCircle className="menu-icon approve-icon" />
+                        Approve
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleCancel(booking.id)}>
+                        <XCircle className="menu-icon cancel-icon" />
+                        Cancel
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+
+      {filteredBookings.length === 0 && (
+        <div className="empty-state">
+          <Calendar className="empty-icon" />
+          <p className="empty-text">No bookings found</p>
+        </div>
+      )}
+    </Card>
+  </div>
+</AdminLayout>
   );
 }

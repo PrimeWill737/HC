@@ -43,68 +43,68 @@ export default function PatientAuth({ onAuth, onBack }: PatientAuthProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+    <div className="patient-auth-container">
+      <div className="patient-auth-wrapper">
         {/* Back Button */}
         <Button
           variant="ghost"
           onClick={onBack}
-          className="mb-6 text-gray-600 hover:text-gray-900"
+          className="patient-auth-back-btn"
         >
-          <ArrowLeft className="w-4 h-4 mr-2" />
+          <ArrowLeft className="patient-auth-back-icon" />
           Back
         </Button>
 
         {/* Logo */}
-        <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-3 rounded-xl shadow-lg">
-            <Activity className="w-8 h-8 text-white" />
+        <div className="patient-auth-logo">
+          <div className="patient-auth-logo-icon">
+            <Activity className="patient-auth-logo-icon-svg" />
           </div>
-          <div className="text-left">
-            <h2 className="text-blue-900">Healthcare Base</h2>
-            <p className="text-xs text-gray-600">Patient Portal</p>
+          <div className="patient-auth-logo-text">
+            <h2 className="patient-auth-logo-title">Healthcare Base</h2>
+            <p className="patient-auth-logo-subtitle">Patient Portal</p>
           </div>
         </div>
 
         {/* Auth Card */}
-        <Card className="p-6 shadow-xl border-0">
-          <Tabs defaultValue="login" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-6">
+        <Card className="patient-auth-card">
+          <Tabs defaultValue="login" className="patient-auth-tabs">
+            <TabsList className="patient-auth-tabs-list">
               <TabsTrigger value="login">Login</TabsTrigger>
               <TabsTrigger value="signup">Sign Up</TabsTrigger>
             </TabsList>
 
             {/* Login Tab */}
             <TabsContent value="login">
-              <form onSubmit={handleLogin} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="login-email">Email</Label>
+              <form onSubmit={handleLogin} className="patient-auth-form">
+                <div className="form-group">
+                  <Label htmlFor="login-email" className="form-label">Email</Label>
                   <Input
                     id="login-email"
                     type="email"
                     placeholder="your.email@example.com"
                     value={loginEmail}
                     onChange={(e) => setLoginEmail(e.target.value)}
-                    className="rounded-lg"
+                    className="patient-auth-input"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="login-password">Password</Label>
+                <div className="form-group">
+                  <Label htmlFor="login-password" className="form-label">Password</Label>
                   <Input
                     id="login-password"
                     type="password"
                     placeholder="••••••••"
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
-                    className="rounded-lg"
+                    className="patient-auth-input"
                   />
                 </div>
 
-                <div className="text-right">
+                <div className="patient-auth-options">
                   <button
                     type="button"
-                    className="text-sm text-blue-600 hover:underline"
+                    className="patient-auth-forgot-password"
                   >
                     Forgot password?
                   </button>
@@ -112,7 +112,7 @@ export default function PatientAuth({ onAuth, onBack }: PatientAuthProps) {
 
                 <Button
                   type="submit"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-5"
+                  className="patient-auth-submit-btn patient-auth-login-btn"
                 >
                   Login
                 </Button>
@@ -121,82 +121,82 @@ export default function PatientAuth({ onAuth, onBack }: PatientAuthProps) {
 
             {/* Sign Up Tab */}
             <TabsContent value="signup">
-              <form onSubmit={handleSignup} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="signup-name">Full Name</Label>
+              <form onSubmit={handleSignup} className="patient-auth-form">
+                <div className="form-group">
+                  <Label htmlFor="signup-name" className="form-label">Full Name</Label>
                   <Input
                     id="signup-name"
                     type="text"
                     placeholder="John Doe"
                     value={signupName}
                     onChange={(e) => setSignupName(e.target.value)}
-                    className="rounded-lg"
+                    className="patient-auth-input"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="signup-email">Email</Label>
+                <div className="form-group">
+                  <Label htmlFor="signup-email" className="form-label">Email</Label>
                   <Input
                     id="signup-email"
                     type="email"
                     placeholder="your.email@example.com"
                     value={signupEmail}
                     onChange={(e) => setSignupEmail(e.target.value)}
-                    className="rounded-lg"
+                    className="patient-auth-input"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="signup-phone">Phone Number</Label>
+                <div className="form-group">
+                  <Label htmlFor="signup-phone" className="form-label">Phone Number</Label>
                   <Input
                     id="signup-phone"
                     type="tel"
                     placeholder="+1 234 567 8900"
                     value={signupPhone}
                     onChange={(e) => setSignupPhone(e.target.value)}
-                    className="rounded-lg"
+                    className="patient-auth-input"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="signup-state">State</Label>
+                <div className="form-group">
+                  <Label htmlFor="signup-state" className="form-label">State</Label>
                   <Input
                     id="signup-state"
                     type="text"
                     placeholder="Enter your state"
                     value={signupState}
                     onChange={(e) => setSignupState(e.target.value)}
-                    className="rounded-lg"
+                    className="patient-auth-input"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="signup-local-gov">Local Government Area</Label>
+                <div className="form-group">
+                  <Label htmlFor="signup-local-gov" className="form-label">Local Government Area</Label>
                   <Input
                     id="signup-local-gov"
                     type="text"
                     placeholder="Enter your local government area"
                     value={signupLocalGov}
                     onChange={(e) => setSignupLocalGov(e.target.value)}
-                    className="rounded-lg"
+                    className="patient-auth-input"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="signup-password">Password</Label>
+                <div className="form-group">
+                  <Label htmlFor="signup-password" className="form-label">Password</Label>
                   <Input
                     id="signup-password"
                     type="password"
                     placeholder="••••••••"
                     value={signupPassword}
                     onChange={(e) => setSignupPassword(e.target.value)}
-                    className="rounded-lg"
+                    className="patient-auth-input"
                   />
                 </div>
 
                 <Button
                   type="submit"
-                  className="w-full bg-green-600 hover:bg-green-700 text-white rounded-lg py-5"
+                  className="patient-auth-submit-btn patient-auth-signup-btn"
                 >
                   Create Account
                 </Button>
@@ -205,7 +205,7 @@ export default function PatientAuth({ onAuth, onBack }: PatientAuthProps) {
           </Tabs>
         </Card>
 
-        <p className="text-center text-xs text-gray-500 mt-6">
+        <p className="patient-auth-footer">
           By continuing, you agree to our Terms of Service and Privacy Policy
         </p>
       </div>

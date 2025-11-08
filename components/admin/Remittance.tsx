@@ -58,185 +58,185 @@ export default function Remittance({ onNavigate }: RemittanceProps) {
 
   return (
     <AdminLayout onNavigate={onNavigate} activeScreen="remittance">
-      <div className="space-y-6">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h1 className="text-gray-900 mb-2">Remittance Management</h1>
-            <p className="text-gray-600">Track revenue distribution and process payouts</p>
-          </div>
-          <Button 
-            onClick={handleExportRemittance}
-            className="bg-green-600 hover:bg-green-700 text-white rounded-lg"
-          >
-            <Download className="mr-2 w-4 h-4" />
-            Export Remittance
-          </Button>
-        </div>
-
-        {/* Summary Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="p-6">
-            <div className="flex items-start justify-between mb-4">
-              <div className="bg-blue-100 p-3 rounded-xl">
-                <DollarSign className="w-6 h-6 text-blue-600" />
-              </div>
-            </div>
-            <h3 className="text-gray-900 mb-1">Total Revenue</h3>
-            <p className="text-gray-600">${totalGrossRevenue.toLocaleString()}</p>
-            <p className="text-xs text-gray-500 mt-2">All transactions</p>
-          </Card>
-
-          <Card className="p-6">
-            <div className="flex items-start justify-between mb-4">
-              <div className="bg-green-100 p-3 rounded-xl">
-                <Building2 className="w-6 h-6 text-green-600" />
-              </div>
-            </div>
-            <h3 className="text-gray-900 mb-1">Clinic Share (95%)</h3>
-            <p className="text-gray-600">${totalClinicShare.toLocaleString()}</p>
-            <p className="text-xs text-gray-500 mt-2">To be distributed</p>
-          </Card>
-
-          <Card className="p-6">
-            <div className="flex items-start justify-between mb-4">
-              <div className="bg-purple-100 p-3 rounded-xl">
-                <Wallet className="w-6 h-6 text-purple-600" />
-              </div>
-            </div>
-            <h3 className="text-gray-900 mb-1">Platform Fee (5%)</h3>
-            <p className="text-gray-600">${totalPlatformFee.toLocaleString()}</p>
-            <p className="text-xs text-gray-500 mt-2">Platform earnings</p>
-          </Card>
-
-          <Card className="p-6">
-            <div className="flex items-start justify-between mb-4">
-              <div className="bg-orange-100 p-3 rounded-xl">
-                <TrendingUp className="w-6 h-6 text-orange-600" />
-              </div>
-            </div>
-            <h3 className="text-gray-900 mb-1">Pending Payouts</h3>
-            <p className="text-gray-600">{pendingPayouts}</p>
-            <p className="text-xs text-gray-500 mt-2">Awaiting processing</p>
-          </Card>
-        </div>
-
-        {/* Revenue Distribution Chart */}
-        <Card className="p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h2 className="text-gray-900">Revenue Distribution (95/5 Split)</h2>
-              <p className="text-sm text-gray-600">Monthly breakdown of revenue allocation</p>
-            </div>
-            <Select defaultValue="6months">
-              <SelectTrigger className="w-40">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="6months">Last 6 months</SelectItem>
-                <SelectItem value="12months">Last 12 months</SelectItem>
-                <SelectItem value="year">This year</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <ResponsiveContainer width="100%" height={350}>
-            <BarChart data={monthlyData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis dataKey="month" stroke="#9ca3af" />
-              <YAxis stroke="#9ca3af" />
-              <Tooltip 
-                formatter={(value: number) => `$${value.toLocaleString()}`}
-                contentStyle={{ 
-                  backgroundColor: 'white', 
-                  border: '1px solid #e5e7eb',
-                  borderRadius: '8px',
-                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                }}
-              />
-              <Legend />
-              <Bar dataKey="clinic" fill="#007BFF" name="Clinic Revenue (95%)" radius={[8, 8, 0, 0]} />
-              <Bar dataKey="platform" fill="#00B894" name="Platform Fee (5%)" radius={[8, 8, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </Card>
-
-        {/* Remittance Transactions */}
-        <Card className="overflow-hidden">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-gray-900">Remittance Transactions</h2>
-            <p className="text-sm text-gray-600">Recent payout records</p>
-          </div>
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>ID</TableHead>
-                  <TableHead>Clinic</TableHead>
-                  <TableHead>Bookings</TableHead>
-                  <TableHead>Gross Revenue</TableHead>
-                  <TableHead>Clinic Share (95%)</TableHead>
-                  <TableHead>Platform Fee (5%)</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {remittanceTransactions.map((transaction) => (
-                  <TableRow key={transaction.id}>
-                    <TableCell className="text-gray-900">{transaction.id}</TableCell>
-                    <TableCell className="text-gray-900">{transaction.clinic}</TableCell>
-                    <TableCell className="text-gray-700">{transaction.totalBookings}</TableCell>
-                    <TableCell className="text-gray-900">${transaction.grossRevenue.toLocaleString()}</TableCell>
-                    <TableCell className="text-green-600">${transaction.clinicShare.toLocaleString()}</TableCell>
-                    <TableCell className="text-blue-600">${transaction.platformFee.toLocaleString()}</TableCell>
-                    <TableCell>{getStatusBadge(transaction.status)}</TableCell>
-                    <TableCell className="text-gray-600">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3" />
-                        {transaction.date}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      {transaction.status === 'Pending' && (
-                        <Button 
-                          size="sm" 
-                          onClick={() => handleProcessPayout(transaction.id)}
-                          className="bg-green-600 hover:bg-green-700 text-white"
-                        >
-                          Process
-                        </Button>
-                      )}
-                      {transaction.status === 'Paid' && (
-                        <Button size="sm" variant="outline">View</Button>
-                      )}
-                      {transaction.status === 'Processing' && (
-                        <Button size="sm" variant="ghost" disabled>Processing...</Button>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </Card>
-
-        {/* Info Card */}
-        <Card className="p-6 bg-blue-50 border-blue-200">
-          <div className="flex items-start gap-3">
-            <div className="bg-blue-100 p-2 rounded-lg flex-shrink-0">
-              <DollarSign className="w-5 h-5 text-blue-600" />
-            </div>
-            <div>
-              <h3 className="text-gray-900 mb-1">Revenue Split Information</h3>
-              <p className="text-sm text-gray-600">
-                The platform operates on a 95/5 revenue split model. 95% of each consultation fee goes directly to the 
-                clinic/doctor, while 5% is retained as a platform fee to maintain and improve the Healthcare Base infrastructure.
-              </p>
-            </div>
-          </div>
-        </Card>
+  <div className="remittance-space">
+    {/* Header */}
+    <div className="remittance-header">
+      <div>
+        <h1 className="remittance-title">Remittance Management</h1>
+        <p className="remittance-subtitle">Track revenue distribution and process payouts</p>
       </div>
-    </AdminLayout>
+      <Button 
+        onClick={handleExportRemittance}
+        className="export-remittance-button"
+      >
+        <Download className="button-icon" />
+        Export Remittance
+      </Button>
+    </div>
+
+    {/* Summary Cards */}
+    <div className="summary-grid">
+      <Card className="summary-card">
+        <div className="summary-card-header">
+          <div className="summary-icon bg-blue-light">
+            <DollarSign className="icon-blue" />
+          </div>
+        </div>
+        <h3 className="summary-card-title">Total Revenue</h3>
+        <p className="summary-card-value">${totalGrossRevenue.toLocaleString()}</p>
+        <p className="summary-card-description">All transactions</p>
+      </Card>
+
+      <Card className="summary-card">
+        <div className="summary-card-header">
+          <div className="summary-icon bg-green-light">
+            <Building2 className="icon-green" />
+          </div>
+        </div>
+        <h3 className="summary-card-title">Clinic Share (95%)</h3>
+        <p className="summary-card-value">${totalClinicShare.toLocaleString()}</p>
+        <p className="summary-card-description">To be distributed</p>
+      </Card>
+
+      <Card className="summary-card">
+        <div className="summary-card-header">
+          <div className="summary-icon bg-purple-light">
+            <Wallet className="icon-purple" />
+          </div>
+        </div>
+        <h3 className="summary-card-title">Platform Fee (5%)</h3>
+        <p className="summary-card-value">${totalPlatformFee.toLocaleString()}</p>
+        <p className="summary-card-description">Platform earnings</p>
+      </Card>
+
+      <Card className="summary-card">
+        <div className="summary-card-header">
+          <div className="summary-icon bg-orange-light">
+            <TrendingUp className="icon-orange" />
+          </div>
+        </div>
+        <h3 className="summary-card-title">Pending Payouts</h3>
+        <p className="summary-card-value">{pendingPayouts}</p>
+        <p className="summary-card-description">Awaiting processing</p>
+      </Card>
+    </div>
+
+    {/* Revenue Distribution Chart */}
+    <Card className="chart-card">
+      <div className="chart-header">
+        <div>
+          <h2 className="chart-title">Revenue Distribution (95/5 Split)</h2>
+          <p className="chart-subtitle">Monthly breakdown of revenue allocation</p>
+        </div>
+        <Select defaultValue="6months">
+          <SelectTrigger className="chart-select">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="6months">Last 6 months</SelectItem>
+            <SelectItem value="12months">Last 12 months</SelectItem>
+            <SelectItem value="year">This year</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <ResponsiveContainer width="100%" height={350}>
+        <BarChart data={monthlyData}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+          <XAxis dataKey="month" stroke="#9ca3af" />
+          <YAxis stroke="#9ca3af" />
+          <Tooltip 
+            formatter={(value: number) => `$${value.toLocaleString()}`}
+            contentStyle={{ 
+              backgroundColor: 'white', 
+              border: '1px solid #e5e7eb',
+              borderRadius: '8px',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+            }}
+          />
+          <Legend />
+          <Bar dataKey="clinic" fill="#007BFF" name="Clinic Revenue (95%)" radius={[8, 8, 0, 0]} />
+          <Bar dataKey="platform" fill="#00B894" name="Platform Fee (5%)" radius={[8, 8, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </Card>
+
+    {/* Remittance Transactions */}
+    <Card className="transactions-card">
+      <div className="transactions-header">
+        <h2 className="transactions-title">Remittance Transactions</h2>
+        <p className="transactions-subtitle">Recent payout records</p>
+      </div>
+      <div className="table-container">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>ID</TableHead>
+              <TableHead>Clinic</TableHead>
+              <TableHead>Bookings</TableHead>
+              <TableHead>Gross Revenue</TableHead>
+              <TableHead>Clinic Share (95%)</TableHead>
+              <TableHead>Platform Fee (5%)</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {remittanceTransactions.map((transaction) => (
+              <TableRow key={transaction.id}>
+                <TableCell className="transaction-id">{transaction.id}</TableCell>
+                <TableCell className="clinic-name">{transaction.clinic}</TableCell>
+                <TableCell className="bookings-count">{transaction.totalBookings}</TableCell>
+                <TableCell className="gross-revenue">${transaction.grossRevenue.toLocaleString()}</TableCell>
+                <TableCell className="clinic-share">${transaction.clinicShare.toLocaleString()}</TableCell>
+                <TableCell className="platform-fee">${transaction.platformFee.toLocaleString()}</TableCell>
+                <TableCell>{getStatusBadge(transaction.status)}</TableCell>
+                <TableCell className="transaction-date">
+                  <div className="date-container">
+                    <Calendar className="date-icon" />
+                    {transaction.date}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  {transaction.status === 'Pending' && (
+                    <Button 
+                      size="sm" 
+                      onClick={() => handleProcessPayout(transaction.id)}
+                      className="process-button"
+                    >
+                      Process
+                    </Button>
+                  )}
+                  {transaction.status === 'Paid' && (
+                    <Button size="sm" variant="outline" className="view-button">View</Button>
+                  )}
+                  {transaction.status === 'Processing' && (
+                    <Button size="sm" variant="ghost" disabled className="processing-button">Processing...</Button>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+    </Card>
+
+    {/* Info Card */}
+    <Card className="info-card">
+      <div className="info-content">
+        <div className="info-icon">
+          <DollarSign className="info-icon-svg" />
+        </div>
+        <div>
+          <h3 className="info-title">Revenue Split Information</h3>
+          <p className="info-description">
+            The platform operates on a 95/5 revenue split model. 95% of each consultation fee goes directly to the 
+            clinic/doctor, while 5% is retained as a platform fee to maintain and improve the Healthcare Base infrastructure.
+          </p>
+        </div>
+      </div>
+    </Card>
+  </div>
+</AdminLayout>
   );
 }

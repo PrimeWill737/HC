@@ -1,5 +1,5 @@
 import { Activity, Calendar, User, FileText, Bell, Menu, X } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button } from '../UI/button';
 import { useState } from 'react';
 
 interface PatientLayoutProps {
