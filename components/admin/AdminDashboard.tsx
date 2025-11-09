@@ -98,7 +98,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
           </Badge>
         </div>
         <h3 className="stat-card-title">Total Revenue</h3>
-        <p className="stat-card-value">$75,000</p>
+        <p className="stat-card-value"> ₦‎75,000</p>
       </Card>
 
       <Card className="stat-card-item">
@@ -112,7 +112,7 @@ export default function AdminDashboard({ onNavigate }: AdminDashboardProps) {
           </Badge>
         </div>
         <h3 className="stat-card-title">Platform Fee</h3>
-        <p className="stat-card-value">$3,750</p>
+        <p className="stat-card-value">₦‎3,750</p>
       </Card>
     </div>
 

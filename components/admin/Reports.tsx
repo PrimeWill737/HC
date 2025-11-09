@@ -271,7 +271,7 @@ export default function Reports({ onNavigate }: ReportsProps) {
               </div>
             </div>
             <h3 className="summary-card-title">Total Revenue</h3>
-            <p className="summary-card-value">$75,000</p>
+            <p className="summary-card-value">₦‎75,000</p>
             <p className="summary-card-description">Selected period</p>
           </Card>
 
